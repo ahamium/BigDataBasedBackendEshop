@@ -9,7 +9,8 @@ const { Product } = require('../models/product');
 router.get(`/`, async (req, res) => {
     const orderList = await Order.find()
         .populate('user', 'name')
-        .sort({ dateOrdered: -1 });
+        .sort({ dateOrdered: -1 })
+        .limit(50);
 
     if (!orderList) {
         res.status(500).json({ success: false });
@@ -26,7 +27,8 @@ router.get(`/:id`, async (req, res) => {
                 path: 'product',
                 populate: 'category',
             },
-        });
+        })
+        .limit(50);
 
     if (!order) {
         res.status(500).json({ success: false });
