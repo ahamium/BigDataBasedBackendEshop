@@ -37,6 +37,9 @@ router.get(`/`, async (req, res) => {
     }
 
     const productList = await Product.find(filter)
+        .sort((a, b) => {
+            return new Date(b.dateCreated) - new Date(a.dateCreated);
+        })
         .limit(50)
         .populate('category');
 
